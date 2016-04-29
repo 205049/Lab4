@@ -1,75 +1,58 @@
 package it.polito.tdp.model;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import it.polito.tdp.db.AnagrammiDAO;
 
 public class RealModel {
 
-	private List<String> permutazioni;
-	//private char[] ptemp;
-	
-	//private int n;
-	
-	AnagrammiDAO db;
+	List<String> soluzioni;
 
 	public RealModel() {
-		super();
-		permutazioni = new LinkedList<String>();
-		
-		//ptemp = new char[];
-		
-		db = new AnagrammiDAO();
+		soluzioni = new ArrayList<String>();
 	}
 	
-	//SOSTITUIRE LA RICORSIONE CON UNA VERSIONE ITERATIVA
-	public List<String> permuta(String finale){
-		permuta("", finale);
+	public List<String> permuta(String p){
 		
-		return permutazioni;
+		soluzioni.clear();
+		
+		List<Character> array = new ArrayList<Character>();
+		cerca(p,  array, 0);
+		return soluzioni;
 	}
-	
-	public void permuta(String originale, String finale) {
-		 
-		if(finale.length()<=1)
-			permutazioni.add(originale+finale);
-		else{
-			for(int i=0; i < finale.length(); i++) {
-				String nuova = finale.substring(0,i) + finale.substring(i+1);
-				permuta(originale + finale.charAt(i), nuova);
+
+	private void cerca(String p, List<Character> array, int liv) {
+
+		char[] temp = p.toCharArray();
+		
+		if(liv == p.length()){
+			
+			String nuova = ""; //String.valueOf(array);
+			for(Character c: array)
+				nuova += c;	
+			
+			soluzioni.add(nuova);
+			return;
+		}
+		
+		for(int k=0; k<p.length(); k++){
+			
+			if(!array.contains(Character.valueOf(temp[k]))){
+				
+				array.add(Character.valueOf(temp[k]));
+				
+				cerca(p, array, liv+1);
+				
+				array.remove(Character.valueOf(temp[k]));
+				
 			}
 		}
+		
 	}
-	
-	//public String parolaEsistente(String p){
-		//return db.parolaEsistente(p);
-	//}
-	
-	public String cerca(String nome){
-		return db.cerca(nome);
+
+	public String cercaDAO(String s) {
+		AnagrammiDAO dao = new AnagrammiDAO();
+		return dao.parolaEsistente(s);
 	}
-	
-	public static void main(String [] args){
-		RealModel am = new RealModel();
-		Parola p = new Parola("eat");
-		System.out.println(am.permuta("eat"));
-		List<String> perm = new LinkedList<String>(am.permuta("eat"));
-    	
-		String res = "";
-    	for(String s: perm){
-    		if(am.cerca(s) != null){
-    			res += (s + "\n");
-    		} else if(am.cerca(s) == null){
-    			res += (s + "NON VALIDA\n");
-    		}
-    	}
-    	System.out.println(res);
-    	
-    	String s = "cane";
-    	System.out.println(s.substring(0,0));
-    	System.out.println(s.substring(1));
-	}
-	
 }

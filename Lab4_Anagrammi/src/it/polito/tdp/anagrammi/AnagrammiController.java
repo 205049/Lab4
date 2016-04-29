@@ -47,7 +47,7 @@ public class AnagrammiController {
     		//if(model.cerca(s) != null){
     			//txtResult.appendText(s + "\n");
     		//} else 
-    		if(model.cerca(s) == null){
+    		if(model.cercaDAO(s) == null){
     			//txtResult.setStyle("-fx-text-fill: red"); 
     			//txtResult.appendText(s.Color.red + "\n"); //"NON VALIDA\n");
     			t.setFill(javafx.scene.paint.Color.RED);	

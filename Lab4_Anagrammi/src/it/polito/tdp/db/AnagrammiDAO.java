@@ -1,6 +1,7 @@
 package it.polito.tdp.db;
 
 import java.sql.Connection;
+
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,19 +10,19 @@ import java.sql.Statement;
 
 public class AnagrammiDAO {
 
-	/*public String parolaEsistente(String p){
+	public String parolaEsistente(String p){
 		
 		Connection conn = connectDB.getConnection();
 		
-		String sql = "SELECT nome FROM parola WHERE nome = '/" + p + "/'";
+		String sql = "SELECT nome FROM parola WHERE nome = ?";
 		
 		
-		//PreparedStatement st;
-		try{Statement st = conn.createStatement();
-			//st = conn.prepareStatement(sql);
-			//st.setString(1, p);
+		PreparedStatement st;
+		try{//Statement st = conn.createStatement();
+			st = conn.prepareStatement(sql);
+			st.setString(1, p);
 			
-			ResultSet res = st.executeQuery(sql);
+			ResultSet res = st.executeQuery();
 			if(res.next()){
 				
 				String fin = res.getString("nome");
@@ -40,8 +41,9 @@ public class AnagrammiDAO {
 		}
 		
 		return null;
-	}*/
+	}
 	
+	/*
 	String jdbcURL = "jdbc:mysql://localhost/dizionario?user=root";
 	
 	public String cerca(String nome){
@@ -78,4 +80,5 @@ public class AnagrammiDAO {
 		
 		return null;
 	}
+	*/
 }
